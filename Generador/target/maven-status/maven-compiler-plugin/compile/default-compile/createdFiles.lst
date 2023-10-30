@@ -1,0 +1,5 @@
+com\GeneradorLecturas\Generador\GeneradorApplication.class
+com\GeneradorLecturas\Generador\Publisher\PublisherConfiguracion.class
+com\GeneradorLecturas\Generador\Publisher\Publisher.class
+com\GeneradorLecturas\Generador\DTO\LecturaDTO.class
+com\GeneradorLecturas\Generador\Controlador\Generador.class
