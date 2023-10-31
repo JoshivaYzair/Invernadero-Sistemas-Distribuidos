@@ -1,4 +1,4 @@
-package com.GeneradorLecturas.Generador.Publisher;
+ package com.GeneradorLecturas.Generador.Publisher;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
