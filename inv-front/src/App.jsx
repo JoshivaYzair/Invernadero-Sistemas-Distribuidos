@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Notificaciones from './pages/Notificaciones';
+import AddNotificacion from './pages/AddNotificacion';
 
 const App = () => {
   return (
@@ -29,6 +30,14 @@ const App = () => {
           element={
             <Layout>
               <Notificaciones />
+            </Layout>
+          }
+        />
+        <Route
+          path='/notificaciones/agregar'
+          element={
+            <Layout>
+              <AddNotificacion />
             </Layout>
           }
         />

@@ -1,50 +1,93 @@
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
 const Notificaciones = () => {
+  const [notificaciones, setNotificaciones] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const apiUrl = 'http://localhost:8080/notificaciones';
+
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la respuesta');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setNotificaciones(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error al recuperar los datos:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const deleteNotificacion = id => {
+    fetch(`http://localhost:8080/notificaciones/${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al eliminar la notificación');
+        }
+        setNotificaciones(notificaciones.filter(item => item.id !== id));
+      })
+      .catch(error => {
+        console.error('Error al eliminar la notificación:', error);
+      });
+  };
+
   return (
     <div className='p-2'>
-      <div className="jumbotron jumbotron-fluid d-flex justify-content-between d-flex align-items-end">
-        <h1 className="display-5 m-0">Notificaciones</h1>
-        <Button variant="primary" style={{ height: '45px' }}>
-          <i className="bi bi-plus-circle-fill pe-2"></i>
-          Nueva Notificación
-        </Button>{' '}
-      </div>
-      <Table bordered hover responsive className='mt-4'>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tem. Maxima</th>
-            <th>Tem. Minima</th>
-            <th>Hum. Maxima</th>
-            <th>Hum. Minima</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Inv. Papas No.2</td>
-            <td>67 Grados</td>
-            <td>20 Grados</td>
-            <td>30%</td>
-            <td>10%</td>
-          </tr>
-          <tr>
-            <td>Inv. Tomates No.1</td>
-            <td>40 Grados</td>
-            <td>26 Grados</td>
-            <td>50%</td>
-            <td>30%</td>
-          </tr>
-          <tr>
-            <td>Inv. Cebollas No.3</td>
-            <td>60 Grados</td>
-            <td>41 Grados</td>
-            <td>20%</td>
-            <td>15%</td>
-          </tr>
-        </tbody>
-      </Table>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <div>
+          <div className='jumbotron jumbotron-fluid d-flex justify-content-between d-flex align-items-end'>
+            <h1 className='display-5 m-0'>Notificaciones</h1>
+            <Button href='/notificaciones/agregar' variant='primary'>
+              <i className='bi bi-plus-lg pe-2'></i>
+              Nueva Notificación
+            </Button>
+          </div>
+          <Table bordered hover responsive className='mt-4'>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Tem. Maxima</th>
+                <th>Tem. Minima</th>
+                <th>Hum. Maxima</th>
+                <th>Hum. Minima</th>
+                <th style={{ textAlign: 'center' }}>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {notificaciones.map(item => (
+                <tr key={item.id}>
+                  <td>{item.invernadero}</td>
+                  <td>{item.temMax}</td>
+                  <td>{item.temMin}</td>
+                  <td>{item.humMax}</td>
+                  <td>{item.humMin}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <Button
+                      title='Eliminar'
+                      variant='danger'
+                      onClick={() => deleteNotificacion(item.id)}
+                    >
+                      <i className='bi bi-trash3'></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };

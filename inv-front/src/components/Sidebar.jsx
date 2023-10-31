@@ -21,7 +21,7 @@ const Sidebar = () => {
   return (
     <nav
       id='sidebar'
-      className='d-flex flex-column flex-shrink-0 p-3 bg-light'
+      className='d-flex flex-column flex-shrink-0 p-3 m-3 rounded bg-light'
       style={{ width: 280 }}
     >
       <a

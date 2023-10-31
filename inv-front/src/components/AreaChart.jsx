@@ -29,27 +29,12 @@ export const options = {
       position: 'top',
     },
     title: {
-      display: true,
+      display: false,
       text: 'Line Chart',
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      fill: true,
-      label: 'Dataset 2',
-      data: [1000, 2345, 3454, 2345, 2345, 2345, 2345],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
-export function AreaChart() {
+export function AreaChart({ data }) {
   return <Line options={options} data={data} />;
 }
