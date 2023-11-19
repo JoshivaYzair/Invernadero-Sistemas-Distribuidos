@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -28,14 +29,20 @@ public class Consumer {
 
     @Autowired
     private JavaMailSender mailSender;
+    
+    @Value("${emailsArray}")
+    private String[] emailsArray;
+    
+    @Value("${emailFrom}")
+    private String emailFrom;
 
     @RabbitListener(queues = cola)
     public void recive(@Payload String json) {
         try {
             SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo("joshivatapia@gmail.com","jose.angulo215058@potros.itson.edu.mx");
-            email.setFrom("joshivatapia@hotmail.com");
-            
+            email.setTo(emailsArray);
+            email.setFrom(emailFrom);
+
             LecturaDTO lecturadto = om.readValue(json, LecturaDTO.class);
             List<Alarma> lista = as.getAll();
             for (Alarma al : lista) {
@@ -45,7 +52,7 @@ public class Consumer {
                         System.out.println("Humedad limite maxima: " + al.getHumMax());
                         System.out.println("Humedad limite minima:" + al.getHumMin());
                         System.out.println("Humedad actual: " + lecturadto.getHumedad());
-                        
+
                         email.setSubject("ALERTA DE HUMEDAD");
                         email.setText(al.getInvernadero() + ": El invernadero tiene anomalias en el nivel de humedad");
                         mailSender.send(email);
@@ -55,7 +62,7 @@ public class Consumer {
                         System.out.println("Temperatura limite maxima: " + al.getTemMax());
                         System.out.println("Temperatura limite minima:" + al.getTemMin());
                         System.out.println("Temperatura actual: " + lecturadto.getTemperatura());
-                        
+
                         email.setSubject("ALERTA DE TEMPERATURA");
                         email.setText(al.getInvernadero() + ": El invernadero tiene anomalias en el nivel de temperatura");
                         mailSender.send(email);
