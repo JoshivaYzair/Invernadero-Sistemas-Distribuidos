@@ -36,9 +36,7 @@ public class NotificacionControlador {
     }
     
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable("id")String id){
-        if (as.getById(id)!=null) {
-            as.delete(id);
-        }
+    public void eliminar(@PathVariable("id") String id) {
+        as.delete(id);
     }
 }
