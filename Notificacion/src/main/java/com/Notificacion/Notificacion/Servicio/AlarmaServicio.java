@@ -28,5 +28,5 @@ public class AlarmaServicio {
     public void delete(String id){
         ar.deleteById(id);
     }
-
+    
 }
