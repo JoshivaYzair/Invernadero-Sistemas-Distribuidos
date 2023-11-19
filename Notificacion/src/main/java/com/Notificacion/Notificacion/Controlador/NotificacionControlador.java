@@ -4,6 +4,7 @@ import com.Notificacion.Notificacion.Servicio.AlarmaServicio;
 import com.Notificacion.Notificacion.Modelo.Alarma;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,8 @@ public class NotificacionControlador {
     }
     
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable("id") String id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") String id) {
         as.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
