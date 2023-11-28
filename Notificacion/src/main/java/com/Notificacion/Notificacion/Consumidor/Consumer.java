@@ -29,19 +29,13 @@ public class Consumer {
 
     @Autowired
     private JavaMailSender mailSender;
-    
-    @Value("${emailsArray}")
-    private String[] emailsArray;
-    
-    @Value("${emailFrom}")
-    private String emailFrom;
 
     @RabbitListener(queues = cola)
     public void recive(@Payload String json) {
         try {
             SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(emailsArray);
-            email.setFrom(emailFrom);
+            email.setTo("joshivatapia@gmail.com","jose.angulo215058@potros.itson.edu.mx");
+            email.setFrom("joshivatapia@hotmail.com");
 
             LecturaDTO lecturadto = om.readValue(json, LecturaDTO.class);
             List<Alarma> lista = as.getAll();
