@@ -22,9 +22,6 @@
 build/
 build.bat
 
-# Spring Boot
-application*.properties
-application*.yml
 
 # IntelliJ IDEA
 .idea/
