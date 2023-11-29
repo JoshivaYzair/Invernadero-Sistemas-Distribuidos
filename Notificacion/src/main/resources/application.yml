@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: servicio-notificaciones
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: NotificacionesBD
+      
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+  
+  mail:
+    host: smtp.office365.com
+    port: 587
+    protocol: smtp
+    username: joshivatapia@hotmail.com
+    password: mrrfcceobxswhofs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+    instance:
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
