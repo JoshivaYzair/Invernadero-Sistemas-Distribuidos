@@ -18,11 +18,12 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  admin-paths:
-    paths:
-      - uri: "/lectura"
-        method: "GET"
-      - uri: "/notificaciones"
-        method: "POST"
-      - uri: "/notificaciones/"
-        method: "DELETE"
+    
+admin-paths:
+  paths:
+    - uri: "/lectura"
+      method: "GET"
+    - uri: "/notificaciones"
+      method: "POST"
+    - uri: "/notificaciones/"
+      method: "DELETE"

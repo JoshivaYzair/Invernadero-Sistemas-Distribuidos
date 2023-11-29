@@ -16,3 +16,15 @@ spring:
           uri: lb://servicio-lectura
           predicates:
             - Path=/lectura/**
+          filters:
+            - AuthFilter
+        - id: servicio-auth
+          uri: lb://servicio-auth
+          predicates:
+            - Path=/auth/**
+        - id: servicio-notificaciones
+          uri: lb://servicio-notificaciones
+          predicates:
+            - Path=/notificaciones/**
+          filters:
+            - AuthFilter
