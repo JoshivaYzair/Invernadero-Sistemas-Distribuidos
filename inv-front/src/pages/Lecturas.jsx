@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
-const Notificaciones = () => {
-  const [notificaciones, setNotificaciones] = useState([]);
+const Lecturas = () => {
+  const [lecturas, setLecturas] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:8060/notificaciones';
+    const apiUrl = 'http://localhost:8060/lectura';
   
     const token = localStorage.getItem('jwtToken');
   
@@ -25,7 +25,7 @@ const Notificaciones = () => {
         return response.json();
       })
       .then(data => {
-        setNotificaciones(data);
+        setLecturas(data);
         setLoading(false);
       })
       .catch(error => {
@@ -35,14 +35,20 @@ const Notificaciones = () => {
   }, []);
 
   const deleteNotificacion = id => {
-    fetch(`http://localhost:8080/notificaciones/${id}`, {
+    const token = localStorage.getItem('jwtToken');
+    
+    fetch(`http://localhost:8080/lectura/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
     })
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al eliminar la notificación');
         }
-        setNotificaciones(notificaciones.filter(item => item.id !== id));
+        setLecturas(lecturas.filter(item => item.id !== id));
       })
       .catch(error => {
         console.error('Error al eliminar la notificación:', error);
@@ -74,7 +80,7 @@ const Notificaciones = () => {
               </tr>
             </thead>
             <tbody>
-              {notificaciones.map(item => (
+              {lecturas.map(item => (
                 <tr key={item.id}>
                   <td>{item.invernadero}</td>
                   <td>{item.temMax}</td>
@@ -100,4 +106,4 @@ const Notificaciones = () => {
   );
 };
 
-export default Notificaciones;
+export default Lecturas;

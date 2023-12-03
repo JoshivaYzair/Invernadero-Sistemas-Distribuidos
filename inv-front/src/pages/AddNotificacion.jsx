@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Col, Row } from 'react-bootstrap';
 
@@ -23,11 +23,14 @@ const AddNotificacion = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    fetch('http://localhost:8080/notificaciones', {
+  
+    const token = localStorage.getItem('jwtToken');
+  
+    fetch('http://localhost:8060/notificaciones', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(notificacion),
     })
