@@ -1,22 +1,15 @@
-import { jwtDecode } from "jwt-decode";
-import { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('jwtToken');
-
-    if (storedToken) {
-      const decodedUser = decodeToken(storedToken);
-      setUser(decodedUser);
-    }
-  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -29,43 +22,41 @@ const Login = () => {
   const handleLogin = async e => {
     e.preventDefault();
 
-    console.log(userData);
+    fetch('http://localhost:8060/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(response => {
 
-    try {
-      const response = fetch('http://localhost:8060/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
+        if (!response.ok) {
+          throw new Error(
+            'No se obtuvo un token en la respuesta del servidor.'
+          );
+        }
+
+        return response.json();
       })
+      .then(data => {
 
-      console.log(response)
-      const token = response.body.token;
-      console.log(token);
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        console.log(decodedToken);
-        /*
-        const id = decodedToken.usuario.id;
-        const rol = decodedToken.usuario.rol;
+        if (data.token) {
+          const decodedToken = jwtDecode(data.token);
+   
+          const id = decodedToken.id;
+          const rol = decodedToken.rol;
 
-        // Almacenar el ID y el rol del usuario en el almacenamiento local
-        localStorage.setItem('id', id);
-        localStorage.setItem('rol', rol);
+          localStorage.setItem('id', id);
+          localStorage.setItem('rol', rol);
+          localStorage.setItem('jwtToken', data.token);
 
-        // Almacenar el token en el almacenamiento local (puedes usar cookies también)
-        localStorage.setItem('token', token);
-
-        // Redirigir al usuario a la ruta "/"
-        $router.push('/');
-        */
-      } else {
-        console.error('No se obtuvo un token en la respuesta del servidor:', error);
-      }
-    } catch (error) {
-      console.error('Error al autenticar:', error);
-    }
+          navigate('/');
+        }
+      })
+      .catch(error => {
+        console.error('Error al autenticar:', error);
+      });
   };
 
   return (

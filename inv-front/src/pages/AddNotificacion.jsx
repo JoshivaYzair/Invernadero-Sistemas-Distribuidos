@@ -36,7 +36,6 @@ const AddNotificacion = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Notificacion agregada:', data);
         navigate('/notificaciones');
       })
       .catch(error => {

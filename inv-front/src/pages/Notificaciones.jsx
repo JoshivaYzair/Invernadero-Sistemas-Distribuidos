@@ -8,13 +8,13 @@ const Notificaciones = () => {
 
   useEffect(() => {
     const apiUrl = 'http://localhost:8060/notificaciones';
-  
+
     const token = localStorage.getItem('jwtToken');
-  
+
     fetch(apiUrl, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
@@ -35,8 +35,14 @@ const Notificaciones = () => {
   }, []);
 
   const deleteNotificacion = id => {
-    fetch(`http://localhost:8080/notificaciones/${id}`, {
+    const token = localStorage.getItem('jwtToken');
+
+    fetch(`http://localhost:8060/notificaciones/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     })
       .then(response => {
         if (!response.ok) {
@@ -57,10 +63,12 @@ const Notificaciones = () => {
         <div>
           <div className='jumbotron jumbotron-fluid d-flex justify-content-between d-flex align-items-end'>
             <h1 className='display-5 m-0'>Notificaciones</h1>
-            <Button href='/notificaciones/agregar' variant='primary'>
-              <i className='bi bi-plus-lg pe-2'></i>
-              Nueva Notificación
-            </Button>
+            {localStorage.getItem('rol') === 'admin' && (
+              <Button href='/notificaciones/agregar' variant='primary'>
+                <i className='bi bi-plus-lg pe-2'></i>
+                Nueva Notificación
+              </Button>
+            )}
           </div>
           <Table bordered hover responsive className='mt-4'>
             <thead>
@@ -70,7 +78,9 @@ const Notificaciones = () => {
                 <th>Tem. Minima</th>
                 <th>Hum. Maxima</th>
                 <th>Hum. Minima</th>
-                <th style={{ textAlign: 'center' }}>Acciones</th>
+                {localStorage.getItem('rol') === 'admin' && (
+                  <th style={{ textAlign: 'center' }}>Acciones</th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -81,15 +91,17 @@ const Notificaciones = () => {
                   <td>{item.temMin}</td>
                   <td>{item.humMax}</td>
                   <td>{item.humMin}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <Button
-                      title='Eliminar'
-                      variant='danger'
-                      onClick={() => deleteNotificacion(item.id)}
-                    >
-                      <i className='bi bi-trash3'></i>
-                    </Button>
-                  </td>
+                  {localStorage.getItem('rol') === 'admin' && (
+                    <td style={{ textAlign: 'center' }}>
+                      <Button
+                        title='Eliminar'
+                        variant='danger'
+                        onClick={() => deleteNotificacion(item.id)}
+                      >
+                        <i className='bi bi-trash3'></i>
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

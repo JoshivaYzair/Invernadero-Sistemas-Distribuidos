@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Notificaciones from './pages/Notificaciones';
 import AddNotificacion from './pages/AddNotificacion';
+import Lecturas from './pages/Lecturas';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
@@ -18,32 +20,45 @@ const App = () => {
             </Layout>
           }
         />
-        <Route
-          path='/login'
-          element={ <Login /> }
-        />
+        <Route path='/login' element={<Login />} />
         <Route
           path='/dashboard'
           element={
-            <Layout>
-              <Dashboard />
-            </Layout>
+            <PrivateRoute roles={['admin', 'user']}>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path='/notificaciones'
           element={
-            <Layout>
-              <Notificaciones />
-            </Layout>
+            <PrivateRoute roles={['admin', 'user']}>
+              <Layout>
+                <Notificaciones />
+              </Layout>
+            </PrivateRoute>
           }
         />
         <Route
           path='/notificaciones/agregar'
           element={
-            <Layout>
-              <AddNotificacion />
-            </Layout>
+            <PrivateRoute roles={['admin']}>
+              <Layout>
+                <AddNotificacion />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/lecturas'
+          element={
+            <PrivateRoute roles={['admin', 'user']}>
+              <Layout>
+                <Lecturas />
+              </Layout>
+            </PrivateRoute>
           }
         />
       </Routes>

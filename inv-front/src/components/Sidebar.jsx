@@ -5,6 +5,7 @@ const Sidebar = () => {
 
   const DASHBOARD_SELECTED = 'dashboard';
   const NOTIFICACIONES_SELECTED = 'notificaciones';
+  const LECTURAS_SELECTED = 'lecturas';
 
   useEffect(() => {
     const storedActiveItem = localStorage.getItem('activeItem');
@@ -29,7 +30,12 @@ const Sidebar = () => {
         className='container d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none'
         onClick={() => handleItemClick(DASHBOARD_SELECTED)}
       >
-        <img className='p-1' width="60" height="60" src="/src/assets/greenhouse.svg" />
+        <img
+          className='p-1'
+          width='60'
+          height='60'
+          src='/src/assets/greenhouse.svg'
+        />
         <span className='p-2 fs-4 text-center'>Monitoreo de Invernadero</span>
       </a>
       <hr></hr>
@@ -56,6 +62,17 @@ const Sidebar = () => {
             onClick={() => handleItemClick(NOTIFICACIONES_SELECTED)}
           >
             Notificaciones
+          </a>
+        </li>
+        <li className='nav-item'>
+          <a
+            href='/lecturas'
+            className={
+              activeItem === LECTURAS_SELECTED ? 'active nav-link' : 'nav-link'
+            }
+            onClick={() => handleItemClick(LECTURAS_SELECTED)}
+          >
+            Lecturas
           </a>
         </li>
       </ul>
