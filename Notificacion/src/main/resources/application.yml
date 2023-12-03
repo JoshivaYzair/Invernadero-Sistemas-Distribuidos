@@ -10,18 +10,18 @@ spring:
 server:
   port: ${PORT:${SERVER_PORT:0}}
   
-  mail:
-    host: smtp.office365.com
-    port: 587
-    protocol: smtp
-    username: joshivatapia@hotmail.com
-    password: mrrfcceobxswhofs
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+mail:
+  host: smtp.office365.com
+  port: 587
+  protocol: smtp
+  username: joshivatapia@hotmail.com
+  password: mrrfcceobxswhofs
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
 eureka:
     client:
         register-with-eureka: true

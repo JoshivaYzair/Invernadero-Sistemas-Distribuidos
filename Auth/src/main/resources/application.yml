@@ -21,8 +21,6 @@ eureka:
     
 admin-paths:
   paths:
-    - uri: "/lectura"
-      method: "GET"
     - uri: "/notificaciones"
       method: "POST"
     - uri: "/notificaciones/"
