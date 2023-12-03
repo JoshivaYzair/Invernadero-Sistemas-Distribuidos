@@ -1,4 +1,5 @@
 com\Authentication\Auth\Repositorio\UsuarioRepositorio.class
+com\Authentication\Auth\Seguridad\CorsConfig.class
 com\Authentication\Auth\DTO\AuthUserDto$AuthUserDtoBuilder.class
 com\Authentication\Auth\Seguridad\RouteValidator.class
 com\Authentication\Auth\Seguridad\SecurityConfig.class

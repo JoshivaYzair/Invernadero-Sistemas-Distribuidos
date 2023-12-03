@@ -1,4 +1,4 @@
-package com.Lectura.Lectura.Configuracion;
+package com.Authentication.Auth.Seguridad;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,11 +9,11 @@ public class CorsConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("http://localhost:5173/")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE")
-//                .allowedHeaders("*")
-//                .allowCredentials(true);
+//		registry.addMapping("/notificaciones/**")
+//		.allowedOrigins("http://localhost:5500")
+//		.allowedMethods("GET", "POST", "PUT", "DELETE")
+//		.allowedHeaders("*")
+//		.allowCredentials(true);
 		registry.addMapping("/**").allowedMethods("*");
 	}
 }
