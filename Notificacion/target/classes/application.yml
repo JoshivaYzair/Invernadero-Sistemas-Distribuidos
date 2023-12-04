@@ -6,22 +6,22 @@ spring:
       host: localhost
       port: 27017
       database: NotificacionesBD
+  mail:
+    host: smtp-mail.outlook.com
+    port: 587
+    protocol: smtp
+    username: joshivatapia@hotmail.com
+    password: qgfiaigpmdqbvvjg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
       
 server:
   port: ${PORT:${SERVER_PORT:0}}
   
-mail:
-  host: smtp.office365.com
-  port: 587
-  protocol: smtp
-  username: joshivatapia@hotmail.com
-  password: mrrfcceobxswhofs
-  properties:
-    mail:
-      smtp:
-        auth: true
-        starttls:
-          enable: true
 eureka:
     client:
         register-with-eureka: true

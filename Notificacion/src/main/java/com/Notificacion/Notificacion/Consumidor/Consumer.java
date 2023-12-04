@@ -26,6 +26,7 @@ public class Consumer {
 	@Autowired
 	private AlarmaServicio as;
 	
+        @Autowired
 	private JavaMailSender mailSender;
 
 	@RabbitListener(queues = cola)

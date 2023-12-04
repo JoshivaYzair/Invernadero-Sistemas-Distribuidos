@@ -18,10 +18,9 @@ public class Generador {
     @Autowired
     private Publisher publisher;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 30000)
     public void generarDatos() {
         List<String> invernaderos = new ArrayList<>();
-        invernaderos.add("invernadero no.1");
         invernaderos.add("invernadero no.2");
         invernaderos.add("invernadero no.3");
         invernaderos.add("invernadero no.4");
